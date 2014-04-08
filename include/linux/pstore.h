@@ -35,6 +35,7 @@ enum pstore_type_id {
 	PSTORE_TYPE_MCE		= 1,
 	PSTORE_TYPE_CONSOLE	= 2,
 	PSTORE_TYPE_FTRACE	= 3,
+	PSTORE_TYPE_ANNOTATE	= 4,
 	PSTORE_TYPE_UNKNOWN	= 255
 };
 
@@ -66,6 +67,7 @@ struct pstore_info {
 
 #ifdef CONFIG_PSTORE
 extern int pstore_register(struct pstore_info *);
+extern int pstore_annotate(const char *buf);
 #else
 static inline int
 pstore_register(struct pstore_info *psi)
