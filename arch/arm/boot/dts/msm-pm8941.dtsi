@@ -55,6 +55,7 @@
 		qcom,system-reset;
 		qcom,s3-debounce = <32>;
 
+#ifndef CONFIG_VENDOR_SMARTISAN
 		qcom,pon_1 {
 			qcom,pon-type = <0>;
 			qcom,support-reset = <1>;
@@ -75,6 +76,7 @@
 			linux,code = <114>;
 			qcom,use-bark;
 		};
+#endif
 
 		qcom,pon_3 {
 			qcom,pon-type = <3>;

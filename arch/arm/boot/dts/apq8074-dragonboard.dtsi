@@ -551,9 +551,11 @@
 	};
 };
 
+#ifndef CONFIG_VENDOR_SMARTISAN
 &spi_epm {
 	status = "disabled";
 };
+#endif
 
 &pm8941_lsid1 {
 	qcom,leds@d000 {

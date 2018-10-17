@@ -780,6 +780,7 @@
 	};
 };
 
+#ifndef CONFIG_VENDOR_SMARTISAN
 &spi_epm {
 	epm-adc@0 {
 		compatible = "cy,epm-adc-cy8c5568lti-114";
@@ -798,6 +799,7 @@
 		qcom,channel-type = <0xf0000000>;
 	};
 };
+#endif
 
 &pm8941_lsid1 {
 	qcom,leds@d000 {
