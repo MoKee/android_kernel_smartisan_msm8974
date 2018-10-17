@@ -697,6 +697,7 @@
 	};
 };
 
+#ifndef CONFIG_VENDOR_SMARTISAN
 &spi_epm {
 	epm-adc@0 {
 		compatible = "cy,epm-adc-cy8c5568lti-114";
@@ -715,6 +716,7 @@
 		qcom,channel-type = <0xf0000000>;
 	};
 };
+#endif
 
 &dsi_tosh_720_vid {
        qcom,cont-splash-enabled;

@@ -24,7 +24,11 @@
 
 		qcom,initial-pwrlevel = <1>;
 
+#ifdef CONFIG_VENDOR_SMARTISAN
+		qcom,idle-timeout = <24>; //<HZ/12>
+#else
 		qcom,idle-timeout = <8>; //<HZ/12>
+#endif
 		qcom,strtstp-sleepwake;
 		qcom,clk-map = <0x0000006>; //KGSL_CLK_CORE | KGSL_CLK_IFACE
 

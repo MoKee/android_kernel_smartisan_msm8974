@@ -19,7 +19,9 @@
 
 	aliases {
 		spi0 = &spi_0;
+#ifndef CONFIG_VENDOR_SMARTISAN
 		spi7 = &spi_7;
+#endif
 		sdhc1 = &sdhc_1; /* SDC1 eMMC slot */
 		sdhc2 = &sdhc_2; /* SDC2 SD card slot */
 		sdhc3 = &sdhc_3; /* SDC3 SDIO slot */
@@ -703,6 +705,7 @@
 		qcom,bam-dma-res-pipes = <6>;
 	};
 
+#ifndef CONFIG_VENDOR_SMARTISAN
 	spi_7: spi_epm: spi@f9966000 { /* BLSP2 QUP4 */
 		compatible = "qcom,spi-qup-v2";
 		#address-cells = <1>;
@@ -726,6 +729,7 @@
 		qcom,bam-producer-pipe-index = <19>;
 		qcom,master-id = <84>;
 	};
+#endif
 
 	tspp: msm_tspp@f99d8000 {
 		compatible = "qcom,msm_tspp";
@@ -971,9 +975,13 @@
 		spi-max-frequency = <19200000>;
 
 		qcom,gpio-mosi = <&msmgpio 0 0>;
+#ifndef CONFIG_VENDOR_SMARTISAN
 		qcom,gpio-miso = <&msmgpio 1 0>;
+#endif
 		qcom,gpio-clk  = <&msmgpio 3 0>;
+#ifndef CONFIG_VENDOR_SMARTISAN
 		qcom,gpio-cs0  = <&msmgpio 9 0>;
+#endif
 
 		qcom,infinite-mode = <0>;
 		qcom,use-bam;
@@ -2129,7 +2137,11 @@
 		compatible = "qcom,msm-watchdog";
 		reg = <0xf9017000 0x1000>;
 		interrupts = <0 3 0>, <0 4 0>;
+#ifdef CONFIG_VENDOR_SMARTISAN
+		qcom,bark-time = <20000>;
+#else
 		qcom,bark-time = <11000>;
+#endif
 		qcom,pet-time = <10000>;
 		qcom,ipi-ping;
 	};
