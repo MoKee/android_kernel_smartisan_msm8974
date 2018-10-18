@@ -72,6 +72,14 @@ endif
         dtb-$(CONFIG_ARCH_MSM8974)	+= msm8974pro-ab-pm8941-fluid-hbtp.dtb
         dtb-$(CONFIG_ARCH_MSM8974)	+= msm8974pro-ab-pm8941-liquid.dtb
         dtb-$(CONFIG_ARCH_MSM8974)	+= msm8974pro-ab-pm8941-mtp.dtb
+ifdef CONFIG_VENDOR_SMARTISAN
+        dtb-$(CONFIG_ARCH_MSM8974)	+= sfo-v10-msm8974pro-ab-pm8941.dtb
+        dtb-$(CONFIG_ARCH_MSM8974)	+= sfo-v20-msm8974pro-ab-pm8941.dtb
+        dtb-$(CONFIG_ARCH_MSM8974)	+= sfo-v30-msm8974pro-ab-pm8941.dtb
+        dtb-$(CONFIG_ARCH_MSM8974)	+= sfo-v30-msm8974pro-ac-pm8941.dtb
+        dtb-$(CONFIG_ARCH_MSM8974)	+= sfo-v40-msm8974pro-ab-pm8941.dtb
+        dtb-$(CONFIG_ARCH_MSM8974)	+= sfo-v40-msm8974pro-ac-pm8941.dtb
+endif
         dtb-$(CONFIG_ARCH_MSM8974)	+= msm8974pro-ac-pm8941-cdp.dtb
         dtb-$(CONFIG_ARCH_MSM8974)	+= msm8974pro-ac-pm8941-liquid.dtb
         dtb-$(CONFIG_ARCH_MSM8974)	+= msm8974pro-ac-pm8941-mtp.dtb
