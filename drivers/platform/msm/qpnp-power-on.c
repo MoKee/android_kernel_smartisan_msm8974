@@ -511,8 +511,10 @@ static void bark_work_func(struct work_struct *work)
 
 	if (!(pon_rt_sts & QPNP_PON_RESIN_BARK_N_SET)) {
 		/* report the key event and enable the bark IRQ */
+#ifndef CONFIG_VENDOR_SMARTISAN
 		input_report_key(pon->pon_input, cfg->key_code, 0);
 		input_sync(pon->pon_input);
+#endif
 		enable_irq(cfg->bark_irq);
 	} else {
 		/* disable reset */
@@ -554,9 +556,11 @@ static irqreturn_t qpnp_resin_bark_irq(int irq, void *_pon)
 		goto err_exit;
 	}
 
+#ifndef CONFIG_VENDOR_SMARTISAN
 	/* report the key event */
 	input_report_key(pon->pon_input, cfg->key_code, 1);
 	input_sync(pon->pon_input);
+#endif
 	/* schedule work to check the bark status for key-release */
 	schedule_delayed_work(&pon->bark_work, QPNP_KEY_STATUS_DELAY);
 err_exit:
@@ -1081,6 +1085,11 @@ static int __devinit qpnp_pon_config_init(struct qpnp_pon *pon)
 				goto unreg_input_dev;
 			}
 		}
+#ifdef CONFIG_VENDOR_SMARTISAN
+		else {
+			qpnp_pon_masked_write(pon, cfg->s2_cntl2_addr, QPNP_PON_S2_CNTL_EN, 0 );
+		}
+#endif
 
 		rc = qpnp_pon_request_irqs(pon, cfg);
 		if (rc) {
