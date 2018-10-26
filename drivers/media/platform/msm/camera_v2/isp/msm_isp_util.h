@@ -17,7 +17,7 @@
 /* #define CONFIG_MSM_ISP_DBG 1 */
 
 #ifdef CONFIG_MSM_ISP_DBG
-#define ISP_DBG(fmt, args...) printk(fmt, ##args)
+#define ISP_DBG(fmt, args...) trace_printk(fmt, ##args)
 #else
 #define ISP_DBG(fmt, args...) pr_debug(fmt, ##args)
 #endif
