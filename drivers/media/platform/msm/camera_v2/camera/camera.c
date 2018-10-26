@@ -65,10 +65,11 @@ static int camera_check_event_status(struct v4l2_event *event)
 		(struct msm_v4l2_event_data *)&event->u.data[0];
 
 	if (event_data->status > MSM_CAMERA_ERR_EVT_BASE) {
-		pr_err("%s : event_data status out of bounds\n",
+		/*pr_err("%s : event_data status out of bounds\n",
 				__func__);
 		pr_err("%s : Line %d event_data->status 0X%x\n",
 				__func__, __LINE__, event_data->status);
+		*/
 		return -EFAULT;
 	}
 	return 0;
@@ -345,17 +346,20 @@ static int camera_v4l2_s_fmt_vid_cap_mplane(struct file *filep, void *fh,
 
 		rc = msm_post_event(&event, MSM_POST_EVT_TIMEOUT);
 		if (rc < 0)
-			return rc;
+			goto set_fmt_fail;
 
 		rc = camera_check_event_status(&event);
 		if (rc < 0)
-			return rc;
-
+			goto set_fmt_fail;
 		sp->is_vb2_valid = 1;
 	}
 
 	return rc;
 
+set_fmt_fail:
+	kzfree(sp->vb2_q.drv_priv);
+	sp->vb2_q.drv_priv = NULL;
+	return rc;
 }
 
 static int camera_v4l2_try_fmt_vid_cap_mplane(struct file *filep, void *fh,
@@ -670,22 +674,12 @@ static int camera_v4l2_close(struct file *filep)
 	return rc;
 }
 
-#ifdef CONFIG_COMPAT
-long camera_v4l2_compat_ioctl(struct file *file, unsigned int cmd,
-	unsigned long arg)
-{
-	return -ENOIOCTLCMD;
-}
-#endif
 static struct v4l2_file_operations camera_v4l2_fops = {
 	.owner   = THIS_MODULE,
 	.open	= camera_v4l2_open,
 	.poll	= camera_v4l2_poll,
 	.release = camera_v4l2_close,
 	.ioctl   = video_ioctl2,
-#ifdef CONFIG_COMPAT
-	.compat_ioctl32 = camera_v4l2_compat_ioctl,
-#endif
 };
 
 int camera_init_v4l2(struct device *dev, unsigned int *session)
